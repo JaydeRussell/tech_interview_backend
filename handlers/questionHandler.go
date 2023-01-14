@@ -1,6 +1,21 @@
 package handlers
 
-import "github.com/JaydeRussell/tech_interview_backend/interfaces"
+import (
+	"errors"
+	"net/http"
+	"strconv"
+
+	"github.com/JaydeRussell/tech_interview_backend/data"
+	"github.com/JaydeRussell/tech_interview_backend/enum"
+	"github.com/JaydeRussell/tech_interview_backend/interfaces"
+	"github.com/gin-gonic/gin"
+)
+
+const (
+	defaultPage     = 1
+	defaultPageSize = 24
+	defaultSortType = enum.CreatedAtDesc
+)
 
 type QuestionHandler struct {
 	dataService interfaces.DataServicer
@@ -12,22 +27,78 @@ func NewQuestionHandler(dataService interfaces.DataServicer) *QuestionHandler {
 	}
 }
 
-func (q *QuestionHandler) HandleCreate() {
+func (q *QuestionHandler) HandleCreate(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (q *QuestionHandler) HandleGet() {
+func (q *QuestionHandler) HandleGet(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (q *QuestionHandler) HandleUpdate() {
+func (q *QuestionHandler) HandleUpdate(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (q *QuestionHandler) HandleDelete() {
+func (q *QuestionHandler) HandleDelete(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (q *QuestionHandler) HandleSearch() {
-	panic("NOT YET IMPLEMENTED")
+func (q *QuestionHandler) HandleSearch(c *gin.Context) {
+	filter, err := generateFilter(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, data.ErrorResponse{Message: "unable to parse parameters", Err: err.Error()})
+		return
+	}
+
+	results, totalFound, err := q.dataService.Search(filter)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, data.ErrorResponse{Message: "Unable to perform search", Err: err.Error()})
+		return
+	}
+
+	result := data.SearchResponse{
+		Results:    results,
+		TotalFound: totalFound,
+		SearchTerm: filter.SearchTerm,
+		Page:       filter.Page,
+		PageSize:   filter.PageSize,
+		SortType:   filter.SortType,
+	}
+
+	c.JSON(http.StatusOK, result)
+	return
+}
+
+func generateFilter(c *gin.Context) (filter data.Filter, err error) {
+	filter.SearchTerm = c.Query("search-term")
+	filter.Page = defaultPage
+	filter.PageSize = defaultPageSize
+	filter.SortType = defaultSortType
+
+	if c.Query("page") != "" {
+		filter.Page, err = strconv.Atoi(c.Query("page"))
+		if err != nil {
+			err = errors.New("invalid page parameter provided")
+			return
+		}
+	}
+	if c.Query("page-size") != "" {
+		filter.PageSize, err = strconv.Atoi(c.Query("page-size"))
+		if err != nil {
+			err = errors.New("invalid page-size parameter provided")
+			return
+		}
+	}
+
+	if c.Query("sort-type") != "" {
+		// this will return an empty string of the provided sort-type isn't one we support
+		sortType := enum.StringToSortType(c.Query("sort-type"))
+		if sortType != "" {
+			filter.SortType = sortType
+		} else {
+			err = errors.New("invalid sort-type parameter provided")
+			return
+		}
+	}
+	return
 }

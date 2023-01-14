@@ -1,6 +1,9 @@
 package handlers
 
-import "github.com/JaydeRussell/tech_interview_backend/interfaces"
+import (
+	"github.com/JaydeRussell/tech_interview_backend/interfaces"
+	"github.com/gin-gonic/gin"
+)
 
 type AnswerHandler struct {
 	dataService interfaces.DataServicer
@@ -12,18 +15,18 @@ func NewAnswerHandler(dataService interfaces.DataServicer) *AnswerHandler {
 	}
 }
 
-func (a *AnswerHandler) HandleGet() {
+func (a *AnswerHandler) HandleGet(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (a *AnswerHandler) HandleCreate() {
+func (a *AnswerHandler) HandleCreate(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (a *AnswerHandler) HandleUpdate() {
+func (a *AnswerHandler) HandleUpdate(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
 
-func (a *AnswerHandler) HandleDelete() {
+func (a *AnswerHandler) HandleDelete(c *gin.Context) {
 	panic("NOT YET IMPLEMENTED")
 }
