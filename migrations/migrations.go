@@ -35,7 +35,7 @@ func MigrationsDown() {
 		log.Fatal(err)
 	}
 
-	if err := m.Down(); err != nil {
+	if err := m.Down(); err != nil && err != migrate.ErrNoChange {
 		log.Fatal(err)
 	}
 }

@@ -5,16 +5,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/JaydeRussell/tech_interview_backend/constants"
 	"github.com/JaydeRussell/tech_interview_backend/data"
 	"github.com/JaydeRussell/tech_interview_backend/enum"
 	"github.com/JaydeRussell/tech_interview_backend/interfaces"
 	"github.com/gin-gonic/gin"
-)
-
-const (
-	defaultPage     = 1
-	defaultPageSize = 24
-	defaultSortType = enum.CreatedAtDesc
 )
 
 type QuestionHandler struct {
@@ -25,22 +20,6 @@ func NewQuestionHandler(dataService interfaces.DataServicer) *QuestionHandler {
 	return &QuestionHandler{
 		dataService: dataService,
 	}
-}
-
-func (q *QuestionHandler) HandleCreate(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleGet(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleUpdate(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleDelete(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
 }
 
 func (q *QuestionHandler) HandleSearch(c *gin.Context) {
@@ -71,9 +50,9 @@ func (q *QuestionHandler) HandleSearch(c *gin.Context) {
 
 func generateSearchFilterFromQuery(c *gin.Context) (filter data.Filter, err error) {
 	filter.SearchTerm = c.Query("search-term")
-	filter.Page = defaultPage
-	filter.PageSize = defaultPageSize
-	filter.SortType = defaultSortType
+	filter.Page = constants.DefaultPage
+	filter.PageSize = constants.DefaultPageSize
+	filter.SortType = constants.DefaultSortType
 
 	if c.Query("page") != "" {
 		filter.Page, err = strconv.Atoi(c.Query("page"))
@@ -101,4 +80,20 @@ func generateSearchFilterFromQuery(c *gin.Context) (filter data.Filter, err erro
 		}
 	}
 	return
+}
+
+func (q *QuestionHandler) HandleCreate(c *gin.Context) {
+	panic("NOT YET IMPLEMENTED")
+}
+
+func (q *QuestionHandler) HandleGet(c *gin.Context) {
+	panic("NOT YET IMPLEMENTED")
+}
+
+func (q *QuestionHandler) HandleUpdate(c *gin.Context) {
+	panic("NOT YET IMPLEMENTED")
+}
+
+func (q *QuestionHandler) HandleDelete(c *gin.Context) {
+	panic("NOT YET IMPLEMENTED")
 }

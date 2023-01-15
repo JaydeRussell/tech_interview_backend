@@ -22,8 +22,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// while testing we want to reset the DB each time
+	// TODO: remove 'migrations.MigrationsDown()'
+	migrations.MigrationsDown()
 	migrations.RunMigrations()
-	// migrations.MigrationsDown()
 
 	dataService := services.NewPostgresService(db)
 

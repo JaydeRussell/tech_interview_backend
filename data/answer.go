@@ -1,7 +1,7 @@
 package data
 
 type Answer struct {
-	ID         string
-	QuestionID string
-	Body       string
+	ID         string `db:"id"`
+	QuestionID string `db:"question_id"`
+	Body       string `db:"body"`
 }
