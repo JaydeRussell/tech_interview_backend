@@ -1,8 +1,13 @@
 package config
 
+import (
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+)
+
 type config struct {
-	SQL_Connection    string
-	SQL_MigrationFile string
+	DB_Connection    string
+	DB_MigrationFile string
 }
 
 var globalConfig *config
@@ -30,7 +35,9 @@ func newConfigFromFile(fileName string) *config {
 // only used for testing purposes, should likely be deleted before turn in
 func newHardCodedConfig() *config {
 	return &config{
-		SQL_Connection:    "",
-		SQL_MigrationFile: "",
+		DB_Connection:    "postgres://postgres:root@localhost:5432/postgres?sslmode=disable",
+		DB_MigrationFile: "file://migrations",
 	}
 }
+
+// root@localhost:3306

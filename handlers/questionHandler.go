@@ -44,7 +44,7 @@ func (q *QuestionHandler) HandleDelete(c *gin.Context) {
 }
 
 func (q *QuestionHandler) HandleSearch(c *gin.Context) {
-	filter, err := generateFilter(c)
+	filter, err := generateSearchFilterFromQuery(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, data.ErrorResponse{Message: "unable to parse parameters", Err: err.Error()})
 		return
@@ -69,7 +69,7 @@ func (q *QuestionHandler) HandleSearch(c *gin.Context) {
 	return
 }
 
-func generateFilter(c *gin.Context) (filter data.Filter, err error) {
+func generateSearchFilterFromQuery(c *gin.Context) (filter data.Filter, err error) {
 	filter.SearchTerm = c.Query("search-term")
 	filter.Page = defaultPage
 	filter.PageSize = defaultPageSize

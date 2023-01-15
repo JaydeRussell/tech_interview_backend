@@ -1,4 +1,4 @@
-package sql_migrations
+package migrations
 
 import (
 	"log"
@@ -11,14 +11,14 @@ func RunMigrations() {
 	c := config.GetConfig()
 
 	m, err := migrate.New(
-		c.SQL_MigrationFile,
-		c.SQL_Connection,
+		c.DB_MigrationFile,
+		c.DB_Connection,
 	)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := m.Up(); err != nil {
-		log.Fatal()
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatal(err)
 	}
 }
