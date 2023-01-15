@@ -10,19 +10,20 @@ import (
 	"github.com/JaydeRussell/tech_interview_backend/services"
 	"github.com/gin-gonic/gin"
 
-	_ "github.com/lib/pq"
+	_ "gorm.io/driver/postgres"
 )
 
 func main() {
 	// start by grabbing the config
 	c := config.GetConfig()
 
-	db, err := sql.Open("postgres", c.DB_Connection)
+	db, err := sql.Open("pgx", c.DB_Connection)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	migrations.RunMigrations()
+	// migrations.MigrationsDown()
 
 	dataService := services.NewPostgresService(db)
 

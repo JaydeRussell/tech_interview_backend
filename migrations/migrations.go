@@ -22,3 +22,20 @@ func RunMigrations() {
 		log.Fatal(err)
 	}
 }
+
+func MigrationsDown() {
+	c := config.GetConfig()
+
+	m, err := migrate.New(
+		c.DB_MigrationFile,
+		c.DB_Connection,
+	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := m.Down(); err != nil {
+		log.Fatal(err)
+	}
+}

@@ -39,5 +39,3 @@ func newHardCodedConfig() *config {
 		DB_MigrationFile: "file://migrations",
 	}
 }
-
-// root@localhost:3306
