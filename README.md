@@ -5,6 +5,7 @@ This project was created as a tech interview solution. It's separated into two p
 NOTE: The README on both repos are identical to ensure the project is setup correctly.
 
 # Requirements
+
 These are the versions I built with, not necessarly the minimum requirements, but I won't gurantee anything below these versions.
 
 ```
@@ -18,6 +19,7 @@ Node    v18.13.0
 ## Step 1: Starting the postgres database
 In the backend project there's a `docker-compose.yml` file that contains the logic to start the postgres database. It can be run with the following command: `docker-compose -f docker-compose.yml up`.
 
+*DISCLAIMER:* This README assumes that basic 'new repo' commands have been run, such as `npm install` and `go get`, maybe that's not entirely safe to assume, but eh, I did.
 
 ## Step 2: Starting the Golang Backend
 Starting the backend is simple, just navigate to the backend directory and run `go run main.go`
