@@ -23,9 +23,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// clean up the database when we're done.
-	// NOTE: This will undo everything and is only used for testing here
-	migrations.MigrationsDown()
 	migrations.RunMigrations()
 
 	dataService := services.NewPostgresService(db)

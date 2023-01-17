@@ -65,8 +65,8 @@ func (s *PostgresService) Search(filter data.Filter) (results []data.Question, t
 		return
 	}
 
-	// TODO: look into replacing with gorm preloading, it could make our code a lot more pretty
-	// https://gorm.io/docs/preload.html
+	// this could probably be done with gorm preloading
+	// but because we set up the tables with migrations instead of gorm it's a lot more complicated
 	results, err = s.fetchAndAttachAnswers(results)
 	if err != nil {
 		log.Printf("Error attempting to attach answers to the questions: %s", err.Error())
