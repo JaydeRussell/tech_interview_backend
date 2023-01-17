@@ -5,7 +5,6 @@ This project was created as a tech interview solution. It's separated into two p
 NOTE: The README on both repos are identical to ensure the project is setup correctly.
 
 # Requirements
-
 These are the versions I built with, not necessarly the minimum requirements, but I won't gurantee anything below these versions.
 
 ```
@@ -19,10 +18,9 @@ Node    v18.13.0
 ## Step 1: Starting the postgres database
 In the backend project there's a `docker-compose.yml` file that contains the logic to start the postgres database. It can be run with the following command: `docker-compose -f docker-compose.yml up`.
 
-*DISCLAIMER:* This README assumes that basic 'new repo' commands have been run, such as `npm install` and `go get`, maybe that's not entirely safe to assume, but eh, I did.
 
 ## Step 2: Starting the Golang Backend
-Starting the backend is simple, just navigate to the backend directory and run `go run main.go`
+Starting the backend is simple, just navigate to the frontend directory then run `go get` and `go run main.go`
 
 ### Things to watch out for... 
 If there's no database available, then the app will not start. Since this project is a glorified CRUD api, I consider this a feature. 
@@ -32,7 +30,7 @@ Also, by default the backend will attempt to connect to a database provided by t
 **As a note:** Normally, pushing a db connection string to a public github repo is a big no-no, but I consider this permissible since it's a _very_ generic connection string to a locally defined database. I would never do something like this if it were any other circumstance.
 
 ## Step 3: Starting the react frontend
-Starting the react frontend is also very simple, just navigate to the frontend directory and run `npm start`
+Starting the react frontend is also very simple, just navigate to the frontend directory then run `npm install` and `npm start`
 
 ### Things to watch out for...
 The frontend _should_ be started after the backend is already up and running, however most (if not all) of the code accounts for the possibility of the backend not existing. The app probably won't look pretty, but it also shouldn't crash and you should be able to just refresh the browser page after the backend is up and running.
@@ -69,5 +67,3 @@ I used [GORM](https://gorm.io/) as a simple go ORM to make database queries simp
 Despite using GORM for the queries, I didn't use it to set up the table definitions. While it's very capable of building the tables based off of a provided object class, I prefer taking a migration based approach to maintaining database tables. This is because it makes it really simple to view  table definitions and track change history. 
 
 Migrations also make it really easy to spin-up/down entire databases whenever you need them and populate data into a table without having to do so programmatically.
-
-
