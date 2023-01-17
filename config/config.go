@@ -1,6 +1,9 @@
 package config
 
 import (
+	"log"
+	"os"
+
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
@@ -14,7 +17,7 @@ var globalConfig *config
 func GetConfig() *config {
 	// lazy load our config singleton
 	if globalConfig == nil {
-		globalConfig = newHardCodedConfig()
+		globalConfig = newEnvConfig()
 		return globalConfig
 	}
 
@@ -23,17 +26,15 @@ func GetConfig() *config {
 
 // create a new config object using environmental variables
 func newEnvConfig() *config {
-	panic("NOT YET IMPLEMENTED")
-}
-
-// create a new config from a file
-func newConfigFromFile(fileName string) *config {
-	panic("NOT YET IMPLEMENTED")
-}
-
-// only used for testing purposes, should likely be deleted before turn in
-func newHardCodedConfig() *config {
 	return &config{
-		DB_Connection: "postgres://postgres:root@localhost:5432/postgres?sslmode=disable",
+		DB_Connection: mustExist("DB_CONNECTION"),
 	}
+}
+
+func mustExist(v string) string {
+	possibleVariable := os.Getenv(v)
+	if possibleVariable == "" {
+		log.Fatalf("could not find %s or was empty. Must be provided", v)
+	}
+	return possibleVariable
 }
