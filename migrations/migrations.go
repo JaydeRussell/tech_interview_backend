@@ -11,7 +11,7 @@ func RunMigrations() {
 	c := config.GetConfig()
 
 	m, err := migrate.New(
-		c.DB_MigrationFile,
+		"file://migrations",
 		c.DB_Connection,
 	)
 
@@ -27,7 +27,7 @@ func MigrationsDown() {
 	c := config.GetConfig()
 
 	m, err := migrate.New(
-		c.DB_MigrationFile,
+		"file://migrations",
 		c.DB_Connection,
 	)
 

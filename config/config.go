@@ -6,8 +6,7 @@ import (
 )
 
 type config struct {
-	DB_Connection    string
-	DB_MigrationFile string
+	DB_Connection string
 }
 
 var globalConfig *config
@@ -35,7 +34,6 @@ func newConfigFromFile(fileName string) *config {
 // only used for testing purposes, should likely be deleted before turn in
 func newHardCodedConfig() *config {
 	return &config{
-		DB_Connection:    "postgres://postgres:root@localhost:5432/postgres?sslmode=disable",
-		DB_MigrationFile: "file://migrations",
+		DB_Connection: "postgres://postgres:root@localhost:5432/postgres?sslmode=disable",
 	}
 }

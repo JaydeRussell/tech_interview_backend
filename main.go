@@ -22,8 +22,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// while testing we want to reset the DB each time
-	// TODO: remove 'migrations.MigrationsDown()'
+	// clean up the database when we're done.
+	// NOTE: This will undo everything and is only used for testing here
 	migrations.MigrationsDown()
 	migrations.RunMigrations()
 
@@ -34,14 +34,26 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/search", questionHandler.HandleSearch)
-	// router.GET("/questions/:id", questionHandler.HandleGet)
-	// router.POST("/questions", questionHandler.HandleCreate)
-	// router.DELETE("/questions/:id", questionHandler.HandleDelete)
+	// attach custom middleware
+	router.Use(CORS())
 
-	// router.GET("/answers/:questionID", answerHandler.HandleGet)
-	// router.POST("/answers", answerHandler.HandleCreate)
-	// router.DELETE("/answers", answerHandler.HandleDelete)
+	// attach endpoints
+	router.GET("/search", questionHandler.HandleSearch)
 
 	router.Run(":9001")
+}
+
+func CORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, Origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
 }

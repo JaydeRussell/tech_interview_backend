@@ -81,19 +81,3 @@ func generateSearchFilterFromQuery(c *gin.Context) (filter data.Filter, err erro
 	}
 	return
 }
-
-func (q *QuestionHandler) HandleCreate(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleGet(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleUpdate(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
-
-func (q *QuestionHandler) HandleDelete(c *gin.Context) {
-	panic("NOT YET IMPLEMENTED")
-}
